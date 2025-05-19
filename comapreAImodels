@@ -1,0 +1,90 @@
+import os
+import json
+from dotenv import load_dotenv
+from openai import OpenAI
+from IPython.display import Markdown, display
+
+load_dotenv(override=True)
+
+openai_api_key= os.getenv('OPENAI_API_KEY')
+google_api_key = os.getenv('GOOGLE_API_KEY')
+
+
+competitors=[];
+answers=[];
+
+request = "Please come up with a challenging, nuanced question that I can ask a number of LLMs to evaluate their intelligence. "
+request += "Answer only with the question, no explanation."
+messages = [{"role": "user", "content": request}]
+
+
+openai=OpenAI()
+response = openai.chat.completions.create(
+	model="gpt-4o-mini",
+	messages=messages
+	)
+
+question = response.choices[0].message.content
+display(Markdown(question))
+
+messages = [{"role": "user", "content": question}]
+
+openai=OpenAI()
+response = openai.chat.completions.create(
+	model="gpt-4o-mini",
+	messages=messages
+	)
+
+
+model_name = "gpt-4o-mini"
+answer = response.choices[0].message.content
+display(Markdown(answer))
+competitors.append(model_name)
+answers.append(answer)
+
+
+
+gemini = OpenAI(api_key=google_api_key, baseurl="https://generativelanguage.googleapis.com/v1beta/openai/");
+model_name = "gemini-2.0-flash";
+response = gemini.chat.completions.create(
+	model ="gemini-2.0-flash"
+	messages=messages
+	)
+
+answer = response.choices[0].message.content
+display(Markdown(answer))
+competitors.append(model_name)
+answers.append(answer)
+
+for competitor, answer in zip(competitors, answers):
+	print(f"Competitor:{competitor}\n\n{answer}");
+
+together=""
+for index, answer in enumerate(answers):
+	together+=f"#Response from competitor{index+1}\n\n"
+	together+=answer+"\n\n"
+
+
+
+judge =f"""You are judging a competition between 2 competitors.
+Each model was fed with tis question:
+{question}
+
+Your Job is to evaluate each response for clarity and strenght of argument, and rank them in order of best to worst.
+Respond in the following format:
+{{"results":["best competitor","second best competitor"]}}
+
+Here are the responses from each competitor:
+{together}
+
+Now respond with the JSON with the ranked order of the competitors, nothing else. Do not include markdown formatting or code blocks."""
+
+judge_messages = [{"role": "user, "content":judge}];
+
+openai = OpenAI();
+response = openai.chat.completions.create(
+    model="gpt-4.1",
+    messages=judge_messages,
+)
+results = response.choices[0].message.content
+print(results)
