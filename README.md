@@ -5,7 +5,8 @@ Model A: gpt-4o-mini \
 Model B: Gemini-2.0-flash \
 Model C (Judge) : GPT-4.1
 
-Description: We first user Model A to come up with a challenging question to test the intelligence of LLMs. 
+Description: \
+We first user Model A to come up with a challenging question to test the intelligence of LLMs. 
 Then fed this question to both Model A and Model B as an input and used Model C to evaluate and rank the responses from Model A and Model B.
 
 ## Workflow is as below 
