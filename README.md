@@ -11,6 +11,4 @@ Then fed this question to both Model A and Model B as an input and used Model C 
 
 ## Workflow is as below 
 
-![image](https://github.com/user-attachments/assets/8c9980c6-d4f0-4b6d-acb4-be0e14bd8d42)
-
-
+![image](https://github.com/user-attachments/assets/73101fa0-3e02-4cac-9627-9f7efee184c7)
