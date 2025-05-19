@@ -7,29 +7,8 @@ Model C (Judge) : GPT-4.1
 
 
 
-
-
-
 ###Workflow is as below 
 
-          +-------------------+          +-------------------+
-          |                   |          |                   |
- Input ---> Model A (Responder)          Model B (Responder) | <--- Input
-          |                   |          |                   |
-          +-------------------+          +-------------------+
-                    |                             |
-                    |                             |
-                    +-----------+ +---------------+
-                                V V
-                           +---------------------+
-                           |    Model C (Judge)  |
-                           |  Compares A vs. B   |
-                           +---------------------+
-                                    |
-                                    V
-                             +-----------------+
-                             |   Evaluation    |
-                             |(Which is better)|
-                             |                 |
-                             +-----------------+
+![image](https://github.com/user-attachments/assets/8c9980c6-d4f0-4b6d-acb4-be0e14bd8d42)
+
 
